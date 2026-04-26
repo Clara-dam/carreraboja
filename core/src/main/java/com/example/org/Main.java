@@ -27,33 +27,44 @@ public class Main extends Game {
 
         // Carga de todos los assets centralizada
         assetManager.load(AssetDescriptors.background);
-
+        assetManager.load(AssetDescriptors.splash);
+        assetManager.load(AssetDescriptors.menu);
+        assetManager.load(AssetDescriptors.car1);
+        assetManager.load(AssetDescriptors.car2);
+        assetManager.load(AssetDescriptors.car3);
+        assetManager.load(AssetDescriptors.car4);
+        assetManager.load(AssetDescriptors.car5);
+        assetManager.load(AssetDescriptors.car6);
+        assetManager.load(AssetDescriptors.car7);
+        assetManager.load(AssetDescriptors.playerCar);
+        assetManager.load(AssetDescriptors.playerCar2);
+        assetManager.load(AssetDescriptors.playerCar3);
 
         // Bloqueamos hasta que esté cargado
         assetManager.finishLoading();
 
-        font = new BitmapFont();
+        /*font = new BitmapFont();
         // Aumentamos el tamaño de la fuente globalmente
-        font.getData().setScale(1.5f);
+        font.getData().setScale(1.5f);*/
 
         // Font personalitzada
-        /*FreeTypeFontGenerator generator =
+        FreeTypeFontGenerator generator =
             new FreeTypeFontGenerator(
-                com.badlogic.gdx.Gdx.files.internal("Metamorphous-Regular.ttf"));
+                com.badlogic.gdx.Gdx.files.internal("Quantico-Regular.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter =
             new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size = 20;          // tamaño
+        parameter.size = 70;          // tamaño
         parameter.borderWidth = 2;    // borde
         parameter.borderColor = com.badlogic.gdx.graphics.Color.BLACK;
 
         scoreFont = generator.generateFont(parameter);
 
-        generator.dispose();*/
+        generator.dispose();
 
         viewport = new FitViewport(1080, 2400);
-        font.setUseIntegerPositions(false);
+        //font.setUseIntegerPositions(false);
 
         this.setScreen(new SplashScreen(this));
     }

@@ -20,7 +20,7 @@ public class SplashScreen implements Screen {
 
     @Override
     public void show() {
-        splash = game.assetManager.get(AssetDescriptors.background);
+        splash = game.assetManager.get(AssetDescriptors.splash);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class SplashScreen implements Screen {
 
         game.batch.end();
 
-        /*if (timeShown > 3) { // 3 segundos
+        if (timeShown > 3) { // 3 segundos
             game.setScreen(new MainMenuScreen(game));
             dispose();
-        }*/
+        }
     }
 
     @Override
