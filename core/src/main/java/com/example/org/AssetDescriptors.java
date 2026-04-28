@@ -19,6 +19,8 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Texture> car5 = new AssetDescriptor<>("car5.png", Texture.class);
     public static final AssetDescriptor<Texture> car6 = new AssetDescriptor<>("car6.png", Texture.class);
     public static final AssetDescriptor<Texture> car7 = new AssetDescriptor<>("car7.png", Texture.class);
+    public static final AssetDescriptor<Texture> coin = new AssetDescriptor<>("coin.png", Texture.class);
+    public static final AssetDescriptor<Texture> shield = new AssetDescriptor<>("shield.png", Texture.class);
     public static final AssetDescriptor<Music> bgMusic = new AssetDescriptor<>("bgmusic.mp3", Music.class);
     public static final AssetDescriptor<Sound> fireHit = new AssetDescriptor<>("fireHit.mp3", Sound.class);
     public static final AssetDescriptor<Sound> iceHit = new AssetDescriptor<>("iceHit.mp3", Sound.class);

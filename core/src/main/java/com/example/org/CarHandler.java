@@ -26,10 +26,12 @@ public class CarHandler extends Group {
     private float difficultyTimer = 0f;
 
     private final Texture car1, car2, car3, car4, car5, car6, car7;
+    private final float scrollSpeed;
 
     //private final Sound fireHit, iceHit;
 
-    public CarHandler(AssetManager assetManager) {
+    public CarHandler(AssetManager assetManager, float scrollSpeed) {
+        this.scrollSpeed = scrollSpeed;
         car1 = assetManager.get(AssetDescriptors.car1);
         car2 = assetManager.get(AssetDescriptors.car2);
         car3 = assetManager.get(AssetDescriptors.car3);
@@ -56,7 +58,7 @@ public class CarHandler extends Group {
         if (difficultyTimer >= 3f) { // cada 5 segons
             difficultyTimer = 0f;
 
-            if (carInterval > 0.75f) { // mínimo: 1 coche cada 2 segundos
+            if (carInterval > 2f) { // mínimo: 1 coche cada 2 segundos
                 carInterval -= 0.3f;
             }
         }
@@ -108,7 +110,10 @@ public class CarHandler extends Group {
         // si no hi ha carril lliure, no generem cotxe
         if (x == -1) return;
 
-        float speedY = MathUtils.random(700, 2000); // velocitat aleatòria entre 200 i 400
+        // Velocitat relativa: l'enemic es mou per la carretera a una velocitat 'forwardSpeed'
+        // Per tant, a la pantalla el veiem baixar a 'scrollSpeed - forwardSpeed'
+        float forwardSpeed = MathUtils.random(400, 700);
+        float speedY = scrollSpeed - forwardSpeed;
 
         // Selecció aleatòria entre els 7 cotxes
         Texture selectedTexture;

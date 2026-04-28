@@ -39,6 +39,9 @@ public class Main extends Game {
         assetManager.load(AssetDescriptors.playerCar);
         assetManager.load(AssetDescriptors.playerCar2);
         assetManager.load(AssetDescriptors.playerCar3);
+        assetManager.load(AssetDescriptors.shield);
+        assetManager.load(AssetDescriptors.coin);
+
 
         // Bloqueamos hasta que esté cargado
         assetManager.finishLoading();

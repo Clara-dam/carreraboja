@@ -50,9 +50,6 @@ public class InputHandler implements InputProcessor {
         // Mantener su altura actual (que ahora será 40 gracias al cambio en PlayerCar)
         float y = gameScreen.player.getY();
 
-        if (!gameScreen.player.isFrozen()) {
-            gameScreen.player.setPosition(x, y);
-        }
     }
 
     // El resto no usado

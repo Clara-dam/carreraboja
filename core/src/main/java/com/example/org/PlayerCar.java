@@ -7,14 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * El jugador juga com un cotxe únic
- * Té 3 vides inicials i pot quedar congelat
+ * Té 3 vides inicials, té puntuació, pot tenir escut temporal
  */
 public class PlayerCar extends Image {
-
     private int lives = 3;
-    private float freezeTime = 0;
+    private int score = 0;
+
+    private float shieldTime = 0;
     private final Texture normalTexture, damagedTexture, criticalTexture;
-    private float damageEffectTime = 0;
 
     public PlayerCar(Texture texture, Texture damagedTexture, Texture criticalTexture) {
         super(texture);
@@ -34,6 +34,11 @@ public class PlayerCar extends Image {
     public void act(float delta) {
         super.act(delta);
 
+        // Reducir tiempo de escudo
+        if (shieldTime > 0) {
+            shieldTime -= delta;
+        }
+
         if (lives >= 3) {
             setDrawable(new TextureRegionDrawable(normalTexture));
         } else if (lives == 2) {
@@ -42,31 +47,36 @@ public class PlayerCar extends Image {
             setDrawable(new TextureRegionDrawable(criticalTexture));
         }
     }
-
+    // ------------ VIDAS --------------
     public void takeDamage(int amount) {
+        if (hasShield()) return; // no recibe daño con escudo
+
         lives -= amount;
         if (lives < 0) lives = 0;
     }
-    public void damageEffect() {
-        damageEffectTime = 0.2f;
-    }
-
-    public void freeze(float seconds) {
-        freezeTime = seconds;
-    }
-    public void heal(int amount) {
-        lives += amount;
-        if (lives > 10) lives = 10;
-    }
-
-    public boolean isFrozen() {
-        return freezeTime > 0;
-    }
-
     public int getLives() {
         return lives;
     }
+    public boolean isDead() {
+        return lives <= 0;
+    }
 
+    // ------------ PUNTUACIÓN ------------
+    public void addScore(int amount) {
+        score += amount;
+    }
+    public int getScore() {
+        return score;
+    }
+    // ------------ ESCUDO ------------
+    public void activateShield(float seconds) {
+        shieldTime = seconds;
+    }
+
+    public boolean hasShield() {
+        return shieldTime > 0;
+    }
+    // ------------ COLISIONES ------------
     public Rectangle getBoundingRectangle() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
