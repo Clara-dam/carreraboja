@@ -15,6 +15,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //movePlayer(screenX, screenY);
         //return true;
+        //touchDown descartat perquè si no el joc és molt fàcil
         return false;
     }
 
@@ -25,6 +26,9 @@ public class InputHandler implements InputProcessor {
     }
 
     private void movePlayer(int screenX, int screenY) {
+        // REQUISIT: Si el cotxe està lliscant per l'oli, el jugador no pot moure'l
+        if (gameScreen.player.isSlippery()) return;
+
         Vector3 vector = gameScreen.stage.getCamera()
             .unproject(new Vector3(screenX, screenY, 0));
 
@@ -46,10 +50,10 @@ public class InputHandler implements InputProcessor {
         }
 
         float x = closestLane - playerWidth / 2;
-
-        // Mantener su altura actual (que ahora será 40 gracias al cambio en PlayerCar)
         float y = gameScreen.player.getY();
 
+        // Aplicamos la posición al jugador
+        gameScreen.player.setPosition(x, y);
     }
 
     // El resto no usado

@@ -35,8 +35,6 @@ public class MainMenuScreen implements Screen {
 
         game.batch.draw(background, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
 
-        //game.font.setColor(Color.WHITE);
-
         float worldWidth = game.viewport.getWorldWidth();
         float worldHeight = game.viewport.getWorldHeight();
 
@@ -44,13 +42,12 @@ public class MainMenuScreen implements Screen {
         String instructions = "Esquiva els cotxes\n" +
             "i arriba a la meta.";
 
-        // Bajamos el bloque (worldHeight * 0.55f) para no tapar el título
         game.scoreFont.draw(game.batch, instructions,
-            0, worldHeight * 0.75f, worldWidth, Align.center, true);
+            0, worldHeight * 0.60f, worldWidth, Align.center, true);
 
         // Toca para comenzar
         game.scoreFont.draw(game.batch, "Toca per començar!",
-            0, worldHeight * 0.65f, worldWidth, Align.center, true);
+            0, worldHeight * 0.50f, worldWidth, Align.center, true);
 
         game.batch.end();
 

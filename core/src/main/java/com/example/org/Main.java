@@ -26,6 +26,9 @@ public class Main extends Game {
         assetManager = new AssetManager();
 
         // Carga de todos los assets centralizada
+        assetManager.load(AssetDescriptors.bgMusic);
+        assetManager.load(AssetDescriptors.crash);
+        assetManager.load(AssetDescriptors.carbrake);
         assetManager.load(AssetDescriptors.background);
         assetManager.load(AssetDescriptors.splash);
         assetManager.load(AssetDescriptors.menu);
@@ -39,16 +42,16 @@ public class Main extends Game {
         assetManager.load(AssetDescriptors.playerCar);
         assetManager.load(AssetDescriptors.playerCar2);
         assetManager.load(AssetDescriptors.playerCar3);
-        assetManager.load(AssetDescriptors.shield);
+        assetManager.load(AssetDescriptors.puddle);
         assetManager.load(AssetDescriptors.coin);
+        assetManager.load(AssetDescriptors.finishline);
+        assetManager.load(AssetDescriptors.coinSound);
+        assetManager.load(AssetDescriptors.gameover);
+
 
 
         // Bloqueamos hasta que esté cargado
         assetManager.finishLoading();
-
-        /*font = new BitmapFont();
-        // Aumentamos el tamaño de la fuente globalmente
-        font.getData().setScale(1.5f);*/
 
         // Font personalitzada
         FreeTypeFontGenerator generator =
@@ -59,7 +62,7 @@ public class Main extends Game {
             new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         parameter.size = 70;          // tamaño
-        parameter.borderWidth = 2;    // borde
+        parameter.borderWidth = 3;    // borde
         parameter.borderColor = com.badlogic.gdx.graphics.Color.BLACK;
 
         scoreFont = generator.generateFont(parameter);
@@ -67,7 +70,6 @@ public class Main extends Game {
         generator.dispose();
 
         viewport = new FitViewport(1080, 2400);
-        //font.setUseIntegerPositions(false);
 
         this.setScreen(new SplashScreen(this));
     }
@@ -80,7 +82,7 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
+        if (font != null) font.dispose();
         scoreFont.dispose();
         assetManager.dispose();
     }

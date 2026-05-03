@@ -20,15 +20,13 @@ import java.util.Iterator;
 public class CarHandler extends Group {
     // control de spawn en segons
     private float spawnTimer = 0f;
-    private float carInterval = 3f; // comença en 3 segundos
-
-    // dificultad
-    private float difficultyTimer = 0f;
-
+    private float carInterval = 3f; // comienza en 3 segundos
+    private float difficultyTimer = 0f; // dificultad
     private final Texture car1, car2, car3, car4, car5, car6, car7;
     private final float scrollSpeed;
+    private final Sound crashSound;
 
-    //private final Sound fireHit, iceHit;
+    private boolean spawningEnabled = true;
 
     public CarHandler(AssetManager assetManager, float scrollSpeed) {
         this.scrollSpeed = scrollSpeed;
@@ -39,27 +37,31 @@ public class CarHandler extends Group {
         car5 = assetManager.get(AssetDescriptors.car5);
         car6 = assetManager.get(AssetDescriptors.car6);
         car7 = assetManager.get(AssetDescriptors.car7);
+        crashSound = assetManager.get(AssetDescriptors.crash);
+    }
+
+    public void setSpawningEnabled(boolean enabled) {
+        this.spawningEnabled = enabled;
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
+        if (!spawningEnabled) return;
+
         spawnTimer += delta;
         difficultyTimer += delta;
 
-        // spawn de cotxes
         if (spawnTimer >= carInterval) {
             spawnCar();
             spawnTimer = 0f;
         }
 
-        // dificultat progressiva
-        if (difficultyTimer >= 3f) { // cada 5 segons
-            difficultyTimer = 0f;
-
-            if (carInterval > 2f) { // mínimo: 1 coche cada 2 segundos
-                carInterval -= 0.3f;
+        if (difficultyTimer >= 3f) { // Cada 3 segundos aumenta la dificultad (↓ valor = más rápido, ↑ valor = más lento)
+            difficultyTimer = 0f;    // Reinicia el contador para volver a medir el tiempo
+            if (carInterval > 0.9f) {  // Límite mínimo entre coches (↓ = más difícil, ↑ = más fácil)
+                carInterval -= 0.3f; // Reduce el tiempo entre coches (↑ resta = dificultad sube más rápido, ↓ resta = más gradual)
             }
         }
     }
@@ -70,12 +72,8 @@ public class CarHandler extends Group {
         for (Actor actor : getChildren()) {
             if (actor instanceof Car) {
                 Car car = (Car) actor;
-
-                // mateix carril (aprox) - comparem el centro del cotxe amb el carril candidate
                 if (Math.abs((car.getX() + car.getWidth() / 2f) - laneX) < 10) {
-
-                    // si hi ha un cotxe a prop en vertical, bloqueja
-                    if (Math.abs(car.getY() - spawnY) < 150) {
+                    if (Math.abs(car.getY() - spawnY) < 200) {
                         return false;
                     }
                 }
@@ -90,17 +88,12 @@ public class CarHandler extends Group {
      */
     private void spawnCar() {
         if (getStage() == null) return;
-        float y = getStage().getViewport().getWorldHeight(); // part superior de la pantalla
-
-        // 4 carrils centrats (deixa marges als costats)
+        float y = getStage().getViewport().getWorldHeight();
         float[] lanes = {340, 470, 600, 730};
-
         float x = -1;
 
-        // intentamos encontrar carril libre
         for (int i = 0; i < 10; i++) {
             float candidate = lanes[MathUtils.random(0, lanes.length - 1)];
-
             if (isLaneFree(candidate, y)) {
                 x = candidate;
                 break;
@@ -134,11 +127,8 @@ public class CarHandler extends Group {
 
     /**
      * Comprova col·lisions amb el jugador
-     * Reprodueix el so correcte segons tipus de spell
      */
-    public boolean hitPlayer(PlayerCar player) {
-        boolean hit = false;
-
+    public void hitPlayer(PlayerCar player) {
         Iterator<Actor> it = getChildren().iterator();
 
         while (it.hasNext()) {
@@ -148,12 +138,10 @@ public class CarHandler extends Group {
 
                 if (car.getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
                     player.takeDamage(1);
-                    it.remove(); // Eliminación segura durante la iteración
-                    hit = true;
+                    if (crashSound != null) crashSound.play();
+                    it.remove();
                 }
             }
         }
-
-        return hit;
     }
 }
