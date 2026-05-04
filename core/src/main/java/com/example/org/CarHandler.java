@@ -14,7 +14,7 @@ import java.util.Iterator;
 /**
  * Gestiona els cotxes enemics que circulen per la carretera.
  * Els cotxes apareixen a la part superior i baixen cap avall.
- * Es generen en 4 carrils fixos, deixant espai als costats per decoració.
+ * Es generen en 4 carrils fixos, deixant espai als costats
  * El tipus de cotxe es selecciona aleatòriament entre diversos sprites.
  */
 public class CarHandler extends Group {
@@ -24,7 +24,7 @@ public class CarHandler extends Group {
     private float difficultyTimer = 0f; // dificultad
     private final Texture car1, car2, car3, car4, car5, car6, car7;
     private final float scrollSpeed;
-    private final Sound crashSound;
+    private final Sound crashSound, shieldSound;
 
     private boolean spawningEnabled = true;
 
@@ -38,6 +38,7 @@ public class CarHandler extends Group {
         car6 = assetManager.get(AssetDescriptors.car6);
         car7 = assetManager.get(AssetDescriptors.car7);
         crashSound = assetManager.get(AssetDescriptors.crash);
+        shieldSound = assetManager.get(AssetDescriptors.shieldsound);
     }
 
     public void setSpawningEnabled(boolean enabled) {
@@ -58,10 +59,10 @@ public class CarHandler extends Group {
             spawnTimer = 0f;
         }
 
-        if (difficultyTimer >= 3f) { // Cada 3 segundos aumenta la dificultad (↓ valor = más rápido, ↑ valor = más lento)
+        if (difficultyTimer >= 4f) { // Cada 3 segundos aumenta la dificultad (↓ valor = más rápido, ↑ valor = más lento)
             difficultyTimer = 0f;    // Reinicia el contador para volver a medir el tiempo
-            if (carInterval > 0.9f) {  // Límite mínimo entre coches (↓ = más difícil, ↑ = más fácil)
-                carInterval -= 0.3f; // Reduce el tiempo entre coches (↑ resta = dificultad sube más rápido, ↓ resta = más gradual)
+            if (carInterval > 1.25f) {  // Límite mínimo entre coches (↓ = más difícil, ↑ = más fácil)
+                carInterval -= 0.4f; // Reduce el tiempo entre coches (↑ resta = dificultad sube más rápido, ↓ resta = más gradual)
             }
         }
     }
@@ -137,8 +138,13 @@ public class CarHandler extends Group {
                 Car car = (Car) actor;
 
                 if (car.getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
-                    player.takeDamage(1);
-                    if (crashSound != null) crashSound.play();
+                    if (player.hasShield()) {
+                        if (shieldSound != null) shieldSound.play();
+                    } else {
+                        player.takeDamage(1);
+                        if (crashSound != null) crashSound.play();
+                    }
+
                     it.remove();
                 }
             }

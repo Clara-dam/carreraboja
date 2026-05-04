@@ -24,14 +24,14 @@ public class GameScreen implements Screen {
 
     // --- Lògica de Meta ---
     float distanceTraveled = 0;
-    float raceDistance = 100000; // Distància total a recórrer
+    float raceDistance = 70000; // Distància total a recórrer
     boolean raceFinished = false;
     boolean goalReached = false;
     Image finishLine;
 
     // --- Variables de moviment del background ---
     float backgroundY = 0;
-    float scrollSpeed = 1300;
+    float scrollSpeed = 1100;
 
     public GameScreen(final Main game) {
         this.game = game;
@@ -46,7 +46,8 @@ public class GameScreen implements Screen {
         player = new PlayerCar(
             game.assetManager.get(AssetDescriptors.playerCar),
             game.assetManager.get(AssetDescriptors.playerCar2),
-            game.assetManager.get(AssetDescriptors.playerCar3)
+            game.assetManager.get(AssetDescriptors.playerCar3),
+            game.assetManager.get(AssetDescriptors.carShield)
         );
 
         cars = new CarHandler(game.assetManager, scrollSpeed);
@@ -127,13 +128,13 @@ public class GameScreen implements Screen {
         stage.getBatch().draw(background, 0, backgroundY + height, width, height);
 
         // UI
-        game.scoreFont.getData().setScale(0.8f);
-        game.scoreFont.draw(stage.getBatch(), "Vides: " + player.getLives(), 30, height - 50);
-        game.scoreFont.draw(stage.getBatch(), "Punts: " + player.getScore(), 30, height - 150);
+        game.scoreFont.getData().setScale(0.9f);
+        game.scoreFont.draw(stage.getBatch(), "Vides: " + player.getLives(), 20, height - 50);
+        game.scoreFont.draw(stage.getBatch(), "Punts: " + player.getScore(), 20, height - 150);
 
         // Indicador de progrés
         float progress = Math.min(distanceTraveled / raceDistance, 1.0f);
-        game.scoreFont.draw(stage.getBatch(), "Meta: " + (int)(progress * 100) + "%", width - 310, height - 50);
+        game.scoreFont.draw(stage.getBatch(), "Meta: " + (int)(progress * 100) + "%", width - 350, height - 50);
 
         stage.getBatch().end();
         stage.draw();

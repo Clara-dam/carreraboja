@@ -8,21 +8,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * El jugador juga com un cotxe únic
- * Té 3 vides inicials, té puntuació, pot relliscar
+ * Té 3 vides inicials, té puntuació, pot relliscar i tenir escut
  */
 public class PlayerCar extends Image {
     private int lives = 3;
     private int score = 0;
+    private float shieldTime = 0; // Temps que el cotxe està sota l'efecte del escut
     private int nextLifeScore = 100; // Puntuació per a la propera vida extra
     private float slipperyTime = 0; // Temps que el cotxe està sota l'efecte de l'oli
 
     private final Texture normalTexture, damagedTexture, criticalTexture;
+    private final Texture shieldEffectTexture;
 
-    public PlayerCar(Texture texture, Texture damagedTexture, Texture criticalTexture) {
+    public PlayerCar(Texture texture, Texture damagedTexture, Texture criticalTexture, Texture shieldEffectTexture) {
         super(texture);
         this.normalTexture = texture;
         this.damagedTexture = damagedTexture;
         this.criticalTexture = criticalTexture;
+        this.shieldEffectTexture = shieldEffectTexture;
 
         float aspectRatio = texture.getHeight() / (float) texture.getWidth();
         float width = 110;
@@ -37,6 +40,11 @@ public class PlayerCar extends Image {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        // Reduir temps d'escut
+        if (shieldTime > 0) {
+            shieldTime -= delta;
+        }
 
         // Gestionar el efecto de patinar (aceite)
         if (slipperyTime > 0) {
@@ -63,10 +71,16 @@ public class PlayerCar extends Image {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        // Dibuixem l'efecte d'escut si està actiu a sobre del cotxe
+        if (hasShield() && shieldEffectTexture != null) {
+            batch.draw(shieldEffectTexture, getX() - 15, getY() - 10, getWidth() + 30, getHeight() + 25);
+        }
     }
 
     // ------------ VIDAS --------------
     public void takeDamage(int amount) {
+        if (hasShield()) return; // no recibe daño con escudo
         lives -= amount;
         if (lives < 0) lives = 0;
         updateTexture();
@@ -82,6 +96,14 @@ public class PlayerCar extends Image {
     }
     public boolean isDead() {
         return lives <= 0;
+    }
+
+    // ------------ ESCUDO ------------
+    public void activateShield(float seconds) {
+        shieldTime = seconds;
+    }
+    public boolean hasShield() {
+        return shieldTime > 0;
     }
 
     // ------------ PUNTUACIÓN ------------

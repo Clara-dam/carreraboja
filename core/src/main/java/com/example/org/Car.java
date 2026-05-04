@@ -43,7 +43,7 @@ public class Car extends Image {
                     if (Math.abs(getX() - other.getX()) < 10) {
                         // Si "this" està a dalt (Y major) i s'apropa massa a "other" que està a baix
                         float distance = getY() - (other.getY() + other.getHeight());
-                        if (distance > 0 && distance < 50) {
+                        if (distance > 0 && distance < 100) {
                             // Si anem més ràpid que el de davant, igualem velocitat per no trepitjar-lo
                             if (this.speedY > other.speedY) {
                                 this.speedY = other.speedY;

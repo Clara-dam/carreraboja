@@ -47,7 +47,9 @@ public class Main extends Game {
         assetManager.load(AssetDescriptors.finishline);
         assetManager.load(AssetDescriptors.coinSound);
         assetManager.load(AssetDescriptors.gameover);
-
+        assetManager.load(AssetDescriptors.shield);
+        assetManager.load(AssetDescriptors.carShield);
+        assetManager.load(AssetDescriptors.shieldsound);
 
 
         // Bloqueamos hasta que esté cargado
@@ -61,8 +63,8 @@ public class Main extends Game {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter =
             new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size = 70;          // tamaño
-        parameter.borderWidth = 3;    // borde
+        parameter.size = 60;          // tamaño
+        parameter.borderWidth = 6;    // borde
         parameter.borderColor = com.badlogic.gdx.graphics.Color.BLACK;
 
         scoreFont = generator.generateFont(parameter);

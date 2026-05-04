@@ -35,16 +35,13 @@ public class SplashScreen implements Screen {
 
         game.batch.begin();
 
-        float worldWidth = game.viewport.getWorldWidth();
-        float worldHeight = game.viewport.getWorldHeight();
-
         game.batch.draw(splash, 0, 0,
             game.viewport.getWorldWidth(),
             game.viewport.getWorldHeight());
 
         game.batch.end();
 
-        if (timeShown > 3) { // 3 segundos
+        if (timeShown > 4) { // 3 segundos
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }

@@ -15,18 +15,20 @@ import java.util.Iterator;
 public class RoadObjectHandler extends Group {
 
     private float spawnTimer = 0f;
-    private float spawnInterval = 2.9f;
+    private float spawnInterval = 1.6f;
 
-    private final Texture coinTexture, oilPuddleTexture;
-    private final Sound brakeSound, coinSound;
+    private final Texture coinTexture, oilPuddleTexture, shieldTexture;
+    private final Sound brakeSound, coinSound, shieldSound;
     private final float scrollSpeed;
 
     public RoadObjectHandler(AssetManager assetManager, float scrollSpeed) {
         this.scrollSpeed = scrollSpeed;
         coinTexture = assetManager.get(AssetDescriptors.coin);
         oilPuddleTexture = assetManager.get(AssetDescriptors.puddle);
+        shieldTexture = assetManager.get(AssetDescriptors.shield);
         brakeSound = assetManager.get(AssetDescriptors.carbrake);
         coinSound= assetManager.get(AssetDescriptors.coinSound);
+        shieldSound = assetManager.get(AssetDescriptors.shieldsound);
     }
 
     @Override
@@ -62,12 +64,17 @@ public class RoadObjectHandler extends Group {
 
         RoadObject object;
 
-        if (random < 7) {
-            // 70% monedes
+        if (random < 5) {
+            // 50% monedas
             object = new Coin(coinTexture, coinSound, x, y, speedY);
-        } else {
-            // 30% charcos d'oli
+
+        } else if (random < 9) {
+            // 30% aceite
             object = new OilPuddle(oilPuddleTexture, brakeSound, x, y, speedY);
+
+        } else {
+            // 20% escudo
+            object = new Shield(shieldTexture, shieldSound, x, y, speedY);
         }
 
         addActor(object);
@@ -85,10 +92,9 @@ public class RoadObjectHandler extends Group {
             if (actor instanceof RoadObject) {
                 RoadObject obj = (RoadObject) actor;
 
-                // REQUISIT: Només es pot collir si és visible (no està sota un cotxe)
-                if (obj.getColor().a > 0.5f && obj.getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
+                if (obj.getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
                     obj.applyEffect(player);
-                    it.remove(); // eliminació segura
+                    it.remove(); // eliminación segura
                 }
             }
         }

@@ -47,7 +47,7 @@ public class GameOverScreen implements Screen {
             game.viewport.getWorldHeight()
         );
 
-        game.scoreFont.getData().setScale(1.1f);
+        game.scoreFont.getData().setScale(1.2f);
         String resultMessage;
 
         if (win) {

@@ -39,11 +39,13 @@ public class MainMenuScreen implements Screen {
         float worldHeight = game.viewport.getWorldHeight();
 
         // Agrupamos las instrucciones en un bloque
-        String instructions = "Esquiva els cotxes\n" +
-            "i arriba a la meta.";
+        String instructions =
+            "Esquiva els cotxes i obstacles\n" +
+                "Recull monedes per sumar punts\n" +
+                "i arriba a la meta sense xocar!";
 
         game.scoreFont.draw(game.batch, instructions,
-            0, worldHeight * 0.60f, worldWidth, Align.center, true);
+            0, worldHeight * 0.65f, worldWidth, Align.center, true);
 
         // Toca para comenzar
         game.scoreFont.draw(game.batch, "Toca per començar!",

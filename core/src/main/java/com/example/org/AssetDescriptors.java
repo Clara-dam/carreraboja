@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class AssetDescriptors {
-    public static final AssetDescriptor<Texture> background = new AssetDescriptor<>("final.png", Texture.class);
+    public static final AssetDescriptor<Texture> background = new AssetDescriptor<>("road.png", Texture.class);
     public static final AssetDescriptor<Texture> finishline = new AssetDescriptor<>("finish.png", Texture.class);
     public static final AssetDescriptor<Texture> splash = new AssetDescriptor<>("splash.png", Texture.class);
     public static final AssetDescriptor<Texture> menu = new AssetDescriptor<>("menuScreen.png", Texture.class);
@@ -23,6 +23,9 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Texture> car7 = new AssetDescriptor<>("car7.png", Texture.class);
     public static final AssetDescriptor<Texture> coin = new AssetDescriptor<>("coin.png", Texture.class);
     public static final AssetDescriptor<Texture> puddle = new AssetDescriptor<>("puddle.png", Texture.class);
+    public static final AssetDescriptor<Texture> shield = new AssetDescriptor<>("shield.png", Texture.class);
+    public static final AssetDescriptor<Texture> carShield = new AssetDescriptor<>("carshield.png", Texture.class);
+    public static final AssetDescriptor<Sound> shieldsound = new AssetDescriptor<>("shieldsound.mp3", Sound.class);
     public static final AssetDescriptor<Music> bgMusic = new AssetDescriptor<>("music.mp3", Music.class);
     public static final AssetDescriptor<Sound> crash = new AssetDescriptor<>("crash.mp3", Sound.class);
     public static final AssetDescriptor<Sound> carbrake = new AssetDescriptor<>("carbrake.mp3", Sound.class);

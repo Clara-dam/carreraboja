@@ -17,7 +17,7 @@ public class OilPuddle extends RoadObject {
 
     @Override
     public void applyEffect(PlayerCar player) {
-        player.makeSlippery(2.5f); // El jugador patina durante 2.5 segundos
+        player.makeSlippery(2f); // El jugador patina durante 2 segundos
         if (brakeSound != null) {
             brakeSound.play();
         }
