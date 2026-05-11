@@ -22,8 +22,8 @@ public class CarHandler extends Group {
     private float spawnTimer = 0f;
     private float carInterval = 3f; // comienza en 3 segundos
     private float difficultyTimer = 0f; // dificultad
-    private final Texture car1, car2, car3, car4, car5, car6, car7;
-    private final float scrollSpeed;
+    private final Texture car1, car2, car3, car4, car5, car6, car7, frontCar;
+    private float scrollSpeed;
     private final Sound crashSound, shieldSound;
 
     private boolean spawningEnabled = true;
@@ -37,6 +37,7 @@ public class CarHandler extends Group {
         car5 = assetManager.get(AssetDescriptors.car5);
         car6 = assetManager.get(AssetDescriptors.car6);
         car7 = assetManager.get(AssetDescriptors.car7);
+        frontCar= assetManager.get(AssetDescriptors.frontCar);
         crashSound = assetManager.get(AssetDescriptors.crash);
         shieldSound = assetManager.get(AssetDescriptors.shieldsound);
     }
@@ -61,8 +62,8 @@ public class CarHandler extends Group {
 
         if (difficultyTimer >= 4f) { // Cada 3 segundos aumenta la dificultad (↓ valor = más rápido, ↑ valor = más lento)
             difficultyTimer = 0f;    // Reinicia el contador para volver a medir el tiempo
-            if (carInterval > 1.25f) {  // Límite mínimo entre coches (↓ = más difícil, ↑ = más fácil)
-                carInterval -= 0.4f; // Reduce el tiempo entre coches (↑ resta = dificultad sube más rápido, ↓ resta = más gradual)
+            if (carInterval > 1.5f) {  // Límite mínimo entre coches (↓ = más difícil, ↑ = más fácil)
+                carInterval -= 0.5f; // Reduce el tiempo entre coches (↑ resta = dificultad sube más rápido, ↓ resta = más gradual)
             }
         }
     }
@@ -106,7 +107,7 @@ public class CarHandler extends Group {
 
         // Velocitat relativa: l'enemic es mou per la carretera a una velocitat 'forwardSpeed'
         // Per tant, a la pantalla el veiem baixar a 'scrollSpeed - forwardSpeed'
-        float forwardSpeed = MathUtils.random(400, 700);
+        float forwardSpeed = MathUtils.random(600, 800);
         float speedY = scrollSpeed - forwardSpeed;
 
         // Selecció aleatòria entre els 7 cotxes
@@ -122,8 +123,17 @@ public class CarHandler extends Group {
             case 5: selectedTexture = car6; break;
             default: selectedTexture = car7; break;
         }
+
+        if (MathUtils.randomBoolean(0.3f)) {
+            FrontCar FrontCar = new FrontCar(frontCar, x, y, speedY);
+            addActor(FrontCar);
+            return;
+        }
         Car car = new Car(selectedTexture, x, y, speedY);
         addActor(car);
+    }
+    public void setScrollSpeed(float scrollSpeed) {
+        this.scrollSpeed = scrollSpeed;
     }
 
     /**

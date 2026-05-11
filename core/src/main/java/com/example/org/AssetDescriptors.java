@@ -30,4 +30,6 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> crash = new AssetDescriptor<>("crash.mp3", Sound.class);
     public static final AssetDescriptor<Sound> carbrake = new AssetDescriptor<>("carbrake.mp3", Sound.class);
     public static final AssetDescriptor<Sound> coinSound = new AssetDescriptor<>("coin.mp3", Sound.class);
+    public static final AssetDescriptor<Texture> frontCar = new AssetDescriptor<>("frontCar.png", Texture.class);
+
 }

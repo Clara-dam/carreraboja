@@ -19,7 +19,7 @@ public class RoadObjectHandler extends Group {
 
     private final Texture coinTexture, oilPuddleTexture, shieldTexture;
     private final Sound brakeSound, coinSound, shieldSound;
-    private final float scrollSpeed;
+    private float scrollSpeed;
 
     public RoadObjectHandler(AssetManager assetManager, float scrollSpeed) {
         this.scrollSpeed = scrollSpeed;
@@ -78,6 +78,9 @@ public class RoadObjectHandler extends Group {
         }
 
         addActor(object);
+    }
+    public void setScrollSpeed(float scrollSpeed) {
+        this.scrollSpeed = scrollSpeed;
     }
 
     /**

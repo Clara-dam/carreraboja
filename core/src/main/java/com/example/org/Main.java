@@ -50,6 +50,7 @@ public class Main extends Game {
         assetManager.load(AssetDescriptors.shield);
         assetManager.load(AssetDescriptors.carShield);
         assetManager.load(AssetDescriptors.shieldsound);
+        assetManager.load(AssetDescriptors.frontCar);
 
 
         // Bloqueamos hasta que esté cargado

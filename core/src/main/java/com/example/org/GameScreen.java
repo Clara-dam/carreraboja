@@ -32,6 +32,9 @@ public class GameScreen implements Screen {
     // --- Variables de moviment del background ---
     float backgroundY = 0;
     float scrollSpeed = 1100;
+    float initialScrollSpeed = 1100;
+    float maxExtraSpeed = 600;
+
 
     public GameScreen(final Main game) {
         this.game = game;
@@ -77,6 +80,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+        updateDifficulty();
 
         // Movimiento del fondo
         backgroundY -= scrollSpeed * delta;
@@ -152,6 +156,19 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         game.viewport.update(width, height, true);
     }
+
+    private void updateDifficulty() {
+        if (raceFinished) return;
+        //fem que la dificultat vagi augmentant progressivament a mesura que juguem
+        float progress = Math.min(distanceTraveled / raceDistance, 10f);
+        // he posat un màxim perque si no podria acabant sent massa ràpid
+        scrollSpeed = initialScrollSpeed + (progress * maxExtraSpeed);
+
+        // això es per que la resta d'actors s'adaptin a la nova velocitat
+        if (cars != null) cars.setScrollSpeed(scrollSpeed);
+        if (objects != null) objects.setScrollSpeed(scrollSpeed);
+    }
+
 
     @Override public void pause() { }
     @Override public void resume() { }
